@@ -28,8 +28,8 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/tab_indicator</item>
         <!--<item name="android:background">@drawable/vpi__tab_indicator</item>-->
-        <item name="android:paddingLeft">22dip</item>
-        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingLeft">15dip</item>
+        <item name="android:paddingRight">15dip</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:textAppearance">@style/CustomTabPageIndicator.Text</item>
@@ -41,4 +41,8 @@
         <item name="android:textColor">@drawable/tab_text</item>
     </style>
 
+    <style name="popup_window_anim">
+        <item name="android:windowEnterAnimation">@anim/slide_in</item>
+        <item name="android:windowExitAnimation">@anim/slide_out</item>
+    </style>
 </resources>

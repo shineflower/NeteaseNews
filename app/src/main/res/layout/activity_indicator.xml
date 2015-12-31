@@ -8,74 +8,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="切换栏目"
+        android:text="点击添加更多栏目"
+        android:paddingLeft="10dp"
         android:textSize="20sp"/>
 
-    <com.jackie.neteasenews.FrameLayout
+    <com.jackie.neteasenews.FlowLayout
+        android:id="@+id/flow_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/indicator_item_bg"
-            android:padding="20px"
-            android:text="杭州"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/indicator_item_bg"
-            android:padding="20px"
-            android:text="财经" />
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="科技" />-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="跟帖" />-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="直播" />-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="时尚" />-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="轻松一刻" />-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="移动互联" />-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="健康" />-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/indicator_item_bg"-->
-            <!--android:text="手机" />-->
-    </com.jackie.neteasenews.FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp">
+    </com.jackie.neteasenews.FlowLayout>
 </LinearLayout>

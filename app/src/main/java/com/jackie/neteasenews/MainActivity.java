@@ -87,13 +87,27 @@ public class MainActivity extends FragmentActivity {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //创建一个新的Fragment
+                    mIndicatorPopupWindow.dismiss();
+
+                    for (int i = 0; i < mFragmentList.size(); i++) {
+                        //该指示器已经添加
+                        if (mAdapter.getPageTitle(i).equals(textView.getText().toString())) {
+                            //直接显示
+                            mTabPageIndicator.setViewPager(mViewPager, i);
+                            return;
+                        }
+                    }
+
+                    //添加新的Fragment
                     mOtherFragment = new OtherFragment(textView.getText().toString());
                     mFragmentList.add(mOtherFragment);
-                    mAdapter.notifyDataSetChanged();
-                    mTabPageIndicator.setViewPager(mViewPager, mFragmentList.size() - 1);
 
-                    mIndicatorPopupWindow.dismiss();
+                    //添加相应的标题
+                    mAdapter.getCurrentTitleList().add(textView.getText().toString());
+
+                    mAdapter.notifyDataSetChanged();
+                    //将当前页切换成显示新添加的Fragment
+                    mTabPageIndicator.setViewPager(mViewPager, mFragmentList.size() - 1);
                 }
             });
         }
@@ -123,6 +137,24 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onDismiss() {
                 mArrowButton.setBackgroundResource(R.drawable.arrow_down);
+            }
+        });
+
+        //更新指示器，会调用getPageTitle方法
+        mTabPageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mTabPageIndicator.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
     }

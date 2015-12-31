@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     private TabPageIndicator mTabPageIndicator;
@@ -33,10 +34,11 @@ public class MainActivity extends FragmentActivity {
     private NBAFragment mNBAFragment;
     private CBAFragment mCBAFragment;
 
-    private OtherFragment mOtherFragment;
-    private LinkedList<Fragment> mFragmentList;
+    private MoreFragment mMoreFragment;
+    private List<Fragment> mFragmentList;
 
-    private static final String[] INDICATOR_APPEND_TITLES = { "杭州", "财经", "科技", "跟帖", "直播", "时尚", "轻松一刻", "汽车", "段子", "移动互联" };
+    private static final String[] INDICATOR_APPEND_ITEM = { "杭州", "财经", "科技", "跟帖", "直播", "时尚", "轻松一刻", "汽车", "段子", "军事",
+                                                            "历史", "家居", "原创", "游戏", "健康", "中国足球", "彩票", "手机", "漫画", "移动互联" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +81,9 @@ public class MainActivity extends FragmentActivity {
         mFragmentList.add(mNBAFragment);
         mFragmentList.add(mCBAFragment);
 
-        for (int i = 0; i < INDICATOR_APPEND_TITLES.length; i++) {
+        for (int i = 0; i < INDICATOR_APPEND_ITEM.length; i++) {
             final TextView textView = (TextView) mInflater.inflate(R.layout.indicator_item_textview, mFlowLayout, false);
-            textView.setText(INDICATOR_APPEND_TITLES[i]);
+            textView.setText(INDICATOR_APPEND_ITEM[i]);
             mFlowLayout.addView(textView);
 
             textView.setOnClickListener(new View.OnClickListener() {
@@ -99,8 +101,8 @@ public class MainActivity extends FragmentActivity {
                     }
 
                     //添加新的Fragment
-                    mOtherFragment = new OtherFragment(textView.getText().toString());
-                    mFragmentList.add(mOtherFragment);
+                    mMoreFragment = new MoreFragment(textView.getText().toString());
+                    mFragmentList.add(mMoreFragment);
 
                     //添加相应的标题
                     mAdapter.getCurrentTitleList().add(textView.getText().toString());

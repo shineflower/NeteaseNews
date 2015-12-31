@@ -5,12 +5,12 @@
     android:background="#FFFFFF">
 
     <TextView
-        android:id="@+id/other"
+        android:id="@+id/more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textStyle="bold"
         android:textSize="22sp"
-        android:text="其他" />
+        android:text="更多" />
 
 </RelativeLayout>

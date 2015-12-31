@@ -6,25 +6,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ViewPagerIndicatorAdapter extends FragmentPagerAdapter {
-    private LinkedList<Fragment> mFragmentList;
+    private List<Fragment> mFragmentList;
     private List<String> mCurrentTitleList;
 
-    private static String[] DEFAULT_INDICATOR_CURRENT_TITLES = new String[] { "头条", "娱乐", "热点", "体育", "房产" , "NBA", "CBA" };
+    private static String[] DEFAULT_INDICATOR_ITEM = new String[] { "头条", "娱乐", "热点", "体育", "房产" , "NBA", "CBA" };
 
     public List<String> getCurrentTitleList() {
         return mCurrentTitleList;
     }
 
-    public ViewPagerIndicatorAdapter(FragmentManager fm, LinkedList<Fragment> fragmentList) {
+    public ViewPagerIndicatorAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
         this.mFragmentList = fragmentList;
 
         mCurrentTitleList = new ArrayList<>();
-        mCurrentTitleList.addAll(Arrays.asList(DEFAULT_INDICATOR_CURRENT_TITLES));
+        mCurrentTitleList.addAll(Arrays.asList(DEFAULT_INDICATOR_ITEM));
     }
 
     @Override

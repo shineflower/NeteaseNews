@@ -11,17 +11,16 @@ import android.widget.TextView;
  * Created by Jackie on 2015/12/29.
  * 其他
  */
-public class OtherFragment extends Fragment {
+public class MoreFragment extends Fragment {
     private String mTitle;
 
-    public OtherFragment(String title) {
+    public MoreFragment(String title) {
         this.mTitle = title;
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.fragment_other, container, false);
-        TextView textView = (TextView) view.findViewById(R.id.other);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_more, container, false);
+        TextView textView = (TextView) view.findViewById(R.id.more);
         textView.setText(mTitle);
         return view;
     }

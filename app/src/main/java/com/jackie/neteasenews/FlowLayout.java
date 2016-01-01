@@ -58,22 +58,25 @@ public class FlowLayout extends ViewGroup {
             if (lineWidth + childWidth < sizeWidth - getPaddingLeft() - getPaddingRight()) {  //未换行
                 //叠加行宽
                 lineWidth += childWidth;
-                //得到当前行的最大高度
+                //得到当前行的最大高度(同一行中所有子View中的最大高度)
                 lineHeight = Math.max(lineHeight, childHeight);
             } else {   //换行
-                //对比得到最大的宽度
+                /**
+                 * 换行之后，改行的宽和高就能确定
+                 */
+                //对比得到最大的宽度(所有行中的最大行宽)
                 width = Math.max(width, lineWidth);
-                //重置lineWidth
-                lineWidth = childWidth;
-                //记录行高
+                //记录高度
                 height += lineHeight;
 
+                //重置lineWidth和lineHeight
+                lineWidth = childWidth;
                 lineHeight = childHeight;
             }
 
             //最后一个控件
             if (i == childCount - 1) {
-                width = Math.max(lineWidth, width);
+                width = Math.max(width, lineWidth);
                 height += lineHeight;
             }
         }

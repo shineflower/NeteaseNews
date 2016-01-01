@@ -3,15 +3,16 @@ package com.jackie.neteasenews;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
 public class ViewPagerIndicatorAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList;
-    private List<String> mCurrentTitleList;
+    private List<TextView> mCurrentTitleList;
 
 
-    public ViewPagerIndicatorAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> currentItemList) {
+    public ViewPagerIndicatorAdapter(FragmentManager fm, List<Fragment> fragmentList, List<TextView> currentItemList) {
         super(fm);
         this.mFragmentList = fragmentList;
         this.mCurrentTitleList = currentItemList;
@@ -29,6 +30,6 @@ public class ViewPagerIndicatorAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mCurrentTitleList.get(position);
+        return mCurrentTitleList.get(position).getText().toString();
     }
 }

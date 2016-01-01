@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jackie.neteasenews.IndicatorTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
     android:text="HelloWorld"
     android:clickable="true"
     android:background="@drawable/indicator_item_bg" >
-</com.jackie.neteasenews.IndicatorTextView>
+</TextView>

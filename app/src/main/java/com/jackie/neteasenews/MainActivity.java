@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.viewpagerindicator.TabPageIndicator;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
@@ -24,7 +24,8 @@ public class MainActivity extends FragmentActivity {
     private LayoutInflater mInflater;
     private View mIndicatorView;
     private IndicatorPopupWindow mIndicatorPopupWindow;
-    private FlowLayout mFlowLayout;
+    private FlowLayout mCurrentFlowLayout;
+    private FlowLayout mAllFlowLayout;
 
     private HeadlineFragment mHeadlineFragment;
     private EnjoyFragment mEnjoyFragment;
@@ -36,10 +37,14 @@ public class MainActivity extends FragmentActivity {
 
     private MoreFragment mMoreFragment;
     private List<Fragment> mFragmentList;
+    private List<String> mCurrentItemList;
+    private List<String> mAllItemList;
 
-    private static final String[] INDICATOR_APPEND_ITEM = { "杭州", "财经", "科技", "跟帖", "直播", "时尚", "轻松一刻", "汽车", "段子", "军事",
-                                                            "历史", "家居", "原创", "游戏", "健康", "中国足球", "彩票", "手机", "漫画", "移动互联" };
-
+    private static final String[] INDICATOR_CURRENT_ITEM = new String[] { "头条", "娱乐", "热点", "体育", "房产", "NBA", "CBA" };
+    private static final String[] INDICATOR_ALL_ITEM = { "杭州", "财经", "科技", "跟帖", "直播", "时尚", "轻松一刻", "汽车", "段子", "军事",
+                                                         "历史", "家居", "原创", "游戏", "健康", "政务", "漫画", "哒哒","彩票", "手机",
+                                                         "移动互联", "中国足球", "社会", "影视", "国际足球", "跑步", "数码", "云课堂", "旅游", "读书",
+                                                         "酒香", "教育", "亲子", "暴雪游戏", "情感", "艺术", "值得买", "图片", "博客", "论坛", "订阅" };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +65,8 @@ public class MainActivity extends FragmentActivity {
 
         mIndicatorView = mInflater.inflate(R.layout.activity_indicator, null);
         mIndicatorPopupWindow = new IndicatorPopupWindow(this, mIndicatorView);
-        mFlowLayout = (FlowLayout) mIndicatorView.findViewById(R.id.flow_layout);
+        mCurrentFlowLayout = (FlowLayout) mIndicatorView.findViewById(R.id.current_flow_layout);
+        mAllFlowLayout = (FlowLayout) mIndicatorView.findViewById(R.id.all_flow_layout);
     }
 
     private void initData() {
@@ -72,7 +78,7 @@ public class MainActivity extends FragmentActivity {
         mNBAFragment = new NBAFragment();
         mCBAFragment = new CBAFragment();
 
-        mFragmentList = new LinkedList<>();
+        mFragmentList = new ArrayList<>();
         mFragmentList.add(mHeadlineFragment);
         mFragmentList.add(mEnjoyFragment);
         mFragmentList.add(mHotspotFragment);
@@ -81,42 +87,66 @@ public class MainActivity extends FragmentActivity {
         mFragmentList.add(mNBAFragment);
         mFragmentList.add(mCBAFragment);
 
-        for (int i = 0; i < INDICATOR_APPEND_ITEM.length; i++) {
-            final TextView textView = (TextView) mInflater.inflate(R.layout.indicator_item_textview, mFlowLayout, false);
-            textView.setText(INDICATOR_APPEND_ITEM[i]);
-            mFlowLayout.addView(textView);
+        mCurrentItemList = new ArrayList<>();
+        mCurrentItemList.addAll(Arrays.asList(INDICATOR_CURRENT_ITEM));
 
-            textView.setOnClickListener(new View.OnClickListener() {
+        mAllItemList = new ArrayList<>();
+        mAllItemList.addAll(Arrays.asList(INDICATOR_ALL_ITEM));
+
+        //初始化当前条目
+        for (int i = 0; i < mCurrentItemList.size(); i++) {
+            final int position = i;
+            final IndicatorTextView indicatorTextView = (IndicatorTextView) mInflater.inflate(R.layout.indicator_item_textview, mCurrentFlowLayout, false);
+            indicatorTextView.setText(mCurrentItemList.get(i));
+            mCurrentFlowLayout.addView(indicatorTextView);
+
+            indicatorTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mIndicatorPopupWindow.dismiss();
+                    //直接显示
+                    mTabPageIndicator.setViewPager(mViewPager, position);
+                }
+            });
+        }
 
-                    for (int i = 0; i < mFragmentList.size(); i++) {
-                        //该指示器已经添加
-                        if (mAdapter.getPageTitle(i).equals(textView.getText().toString())) {
-                            //直接显示
-                            mTabPageIndicator.setViewPager(mViewPager, i);
-                            return;
-                        }
+        //初始化候选条目
+        for (int i = 0; i < mAllItemList.size(); i++) {
+            final int position = i;
+            final IndicatorTextView indicatorTextView = (IndicatorTextView) mInflater.inflate(R.layout.indicator_item_textview, mAllFlowLayout, false);
+            indicatorTextView.setText(mAllItemList.get(i));
+            mAllFlowLayout.addView(indicatorTextView);
+
+            indicatorTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //如果已经从候选列表中移除，则已经添加到了当前列表，点击的时候，直接显示当前页面
+                    if (indicatorTextView.isRemovedFromAllItemList()) {
+                        mIndicatorPopupWindow.dismiss();
+                        //直接显示
+                        mTabPageIndicator.setViewPager(mViewPager, mCurrentItemList.indexOf(indicatorTextView.getText().toString()));
+                    } else {  //如果没有从候选列表中移除，将该TextView标记为已经移除
+                        //添加新的Fragment
+                        mMoreFragment = new MoreFragment(indicatorTextView.getText().toString());
+                        mFragmentList.add(mMoreFragment);
+
+                        //添加相应的标题
+                        mCurrentItemList.add(indicatorTextView.getText().toString());
+                        mAdapter.notifyDataSetChanged();
+
+                        mAllItemList.remove(position);
+                        mAllFlowLayout.removeView(indicatorTextView);
+                        indicatorTextView.setIsRemovedFromAllItemList(true);
+
+                        mCurrentFlowLayout.addView(indicatorTextView);
                     }
-
-                    //添加新的Fragment
-                    mMoreFragment = new MoreFragment(textView.getText().toString());
-                    mFragmentList.add(mMoreFragment);
-
-                    //添加相应的标题
-                    mAdapter.getCurrentTitleList().add(textView.getText().toString());
-
-                    mAdapter.notifyDataSetChanged();
-                    //将当前页切换成显示新添加的Fragment
-                    mTabPageIndicator.setViewPager(mViewPager, mFragmentList.size() - 1);
                 }
             });
         }
     }
 
     private void data2View() {
-        mAdapter = new ViewPagerIndicatorAdapter(getSupportFragmentManager(), mFragmentList);
+        mAdapter = new ViewPagerIndicatorAdapter(getSupportFragmentManager(), mFragmentList, mCurrentItemList);
         mViewPager.setAdapter(mAdapter);
 
         //实例化ViewPagerIndicatorAdapter然后设置ViewPager与之关联

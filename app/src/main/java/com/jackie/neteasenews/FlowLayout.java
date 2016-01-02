@@ -120,10 +120,10 @@ public class FlowLayout extends ViewGroup {
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
             MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
-            int childWidth = child.getMeasuredWidth();
-            int childHeight = child.getMeasuredHeight();
+            int childWidth = child.getMeasuredWidth() + params.leftMargin + params.rightMargin;
+            int childHeight = child.getMeasuredHeight() + params.topMargin + params.bottomMargin;
 
-            if (childWidth + lineWidth + params.leftMargin + params.rightMargin > width - getPaddingLeft() - getPaddingRight()) {
+            if (lineWidth + childWidth > width - getPaddingLeft() - getPaddingRight()) {
                 //记录LineHeight
                 mLineHeight.add(lineHeight);
                 //记录当前行的View
@@ -131,14 +131,14 @@ public class FlowLayout extends ViewGroup {
 
                 //重置行宽和行高
                 lineWidth = 0;
-                lineHeight = childHeight + params.topMargin + params.topMargin;
+                lineHeight = childHeight;
 
                 //重置子View集合
                 lineView = new ArrayList<>();
             }
 
-            lineWidth += childWidth + params.leftMargin + params.rightMargin;
-            lineHeight = Math.max(lineHeight, childHeight + params.topMargin + params.bottomMargin);
+            lineWidth += childWidth;
+            lineHeight = Math.max(lineHeight, childHeight);
             lineView.add(child);
         }
 
@@ -165,6 +165,7 @@ public class FlowLayout extends ViewGroup {
                 }
 
                 MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
+                int childWidth = child.getMeasuredWidth() + params.leftMargin + params.rightMargin;
 
                 int childLeft = left + params.leftMargin;
                 int childTop = top + params.topMargin;
@@ -175,7 +176,7 @@ public class FlowLayout extends ViewGroup {
                 child.layout(childLeft, childTop, childRight, childBottom);
 
                 //同一行所有子View高度相同，左边距叠加
-                left += child.getMeasuredWidth() + params.leftMargin + params.rightMargin;
+                left += childWidth;
             }
 
             left = getPaddingLeft();

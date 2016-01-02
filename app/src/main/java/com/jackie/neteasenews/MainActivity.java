@@ -120,11 +120,11 @@ public class MainActivity extends FragmentActivity {
         mArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mArrowButton.setBackgroundResource(R.drawable.arrow_up);
+
                 //弹出
                 mIndicatorPopupWindow.setAnimationStyle(R.style.popup_window_anim);
                 mIndicatorPopupWindow.showAsDropDown(mArrowButton, 0, mTabPageIndicator.getHeight() / 2 - mArrowButton.getHeight());
-
-                mArrowButton.setBackgroundResource(R.drawable.arrow_up);
             }
         });
 
@@ -178,8 +178,11 @@ public class MainActivity extends FragmentActivity {
 
                     mAllItemList.add(textView);
                     mAllFlowLayout.addView(textView);
+
+                    //先将textView的长按事件移除，然后再重新初始化所有的点击事件
+                    textView.setLongClickable(false);
                     initEvent();
-                    return false;
+                    return true;
                 }
             });
         }
@@ -204,9 +207,11 @@ public class MainActivity extends FragmentActivity {
                     mCurrentFlowLayout.addView(textView);
                     //重新初始化点击事件
                     /**
-                     * 从mAllItemList中移除一个元素添加到mCurrentItemList中，必须初始化一下点击事件
+                     * 从mAllItemList中移除一个元素添加到mCurrentItemList中
+                     * 先将textView在mAllItemList的点击事件清除掉，然后再重新初始化所有的点击事件
                      * 否则，移除的元素的点击事件还是在mAllItemList中响应
                      */
+                    textView.setClickable(false);
                     initEvent();
                 }
             });

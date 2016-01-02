@@ -154,6 +154,7 @@ public class MainActivity extends FragmentActivity {
         });
 
         for (int i = 0; i < mCurrentItemList.size(); i++) {
+            final int position = i;
             final TextView textView = mCurrentItemList.get(i);
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -161,6 +162,24 @@ public class MainActivity extends FragmentActivity {
                     mIndicatorPopupWindow.dismiss();
                     //直接显示
                     mTabPageIndicator.setViewPager(mViewPager, mCurrentItemList.indexOf(textView));
+                }
+            });
+
+            //长按删除事件
+            textView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mFragmentList.remove(position);
+                    mCurrentItemList.remove(position);
+                    mCurrentFlowLayout.removeView(textView);
+                    mAdapter.notifyDataSetChanged();
+                    //更新指示器
+                    mTabPageIndicator.notifyDataSetChanged();
+
+                    mAllItemList.add(textView);
+                    mAllFlowLayout.addView(textView);
+                    initEvent();
+                    return false;
                 }
             });
         }

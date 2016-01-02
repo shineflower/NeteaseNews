@@ -14,9 +14,14 @@ import android.widget.TextView;
 public class MoreFragment extends Fragment {
     private String mTitle;
 
+    public MoreFragment() {
+        this.mTitle = "";
+    }
+
     public MoreFragment(String title) {
         this.mTitle = title;
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_more, container, false);

@@ -1,4 +1,4 @@
-package com.jackie.neteasenews;
+package com.jackie.neteasenews.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

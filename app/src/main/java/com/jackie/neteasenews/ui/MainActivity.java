@@ -1,4 +1,4 @@
-package com.jackie.neteasenews;
+package com.jackie.neteasenews.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,11 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.jackie.neteasenews.view.CustomViewPager;
+import com.jackie.neteasenews.view.FlowLayout;
+import com.jackie.neteasenews.view.IndicatorPopupWindow;
+import com.jackie.neteasenews.R;
+import com.jackie.neteasenews.adapter.ViewPagerIndicatorAdapter;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
@@ -17,7 +22,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     private TabPageIndicator mTabPageIndicator;
-    private ViewPager mViewPager;
+    private CustomViewPager mCustomViewPager;
     private ViewPagerIndicatorAdapter mAdapter;
     private ImageButton mArrowButton;
 
@@ -48,7 +53,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_content);
 
         initView();
         initData();
@@ -60,7 +65,8 @@ public class MainActivity extends FragmentActivity {
         mInflater = LayoutInflater.from(this);
 
         mTabPageIndicator = (TabPageIndicator) findViewById(R.id.indicator);
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mCustomViewPager = (CustomViewPager) findViewById(R.id.viewpager);
+        mCustomViewPager.setIsPagingEnabled(false);
         mArrowButton = (ImageButton) findViewById(R.id.indicator_arrow) ;
 
         mIndicatorView = mInflater.inflate(R.layout.activity_indicator, null);
@@ -110,10 +116,10 @@ public class MainActivity extends FragmentActivity {
 
     private void data2View() {
         mAdapter = new ViewPagerIndicatorAdapter(getSupportFragmentManager(), mFragmentList, mCurrentItemList);
-        mViewPager.setAdapter(mAdapter);
+        mCustomViewPager.setAdapter(mAdapter);
 
         //实例化ViewPagerIndicatorAdapter然后设置ViewPager与之关联
-        mTabPageIndicator.setViewPager(mViewPager, 0);
+        mTabPageIndicator.setViewPager(mCustomViewPager, 0);
     }
 
     private void initEvent() {
@@ -161,7 +167,7 @@ public class MainActivity extends FragmentActivity {
                 public void onClick(View v) {
                     mIndicatorPopupWindow.dismiss();
                     //直接显示
-                    mTabPageIndicator.setViewPager(mViewPager, mCurrentItemList.indexOf(textView));
+                    mTabPageIndicator.setViewPager(mCustomViewPager, mCurrentItemList.indexOf(textView));
                 }
             });
 

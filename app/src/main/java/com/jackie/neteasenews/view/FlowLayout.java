@@ -1,4 +1,4 @@
-package com.jackie.neteasenews;
+package com.jackie.neteasenews.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

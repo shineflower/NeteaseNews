@@ -12,13 +12,13 @@
         android:paddingLeft="10dp"
         android:textSize="20sp"/>
 
-    <com.jackie.neteasenews.FlowLayout
+    <com.jackie.neteasenews.view.FlowLayout
         android:id="@+id/current_flow_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingLeft="10dp">
-    </com.jackie.neteasenews.FlowLayout>
+    </com.jackie.neteasenews.view.FlowLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -28,11 +28,11 @@
         android:paddingLeft="10dp"
         android:textSize="20sp"/>
 
-    <com.jackie.neteasenews.FlowLayout
+    <com.jackie.neteasenews.view.FlowLayout
         android:id="@+id/all_flow_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:paddingLeft="10dp">
-    </com.jackie.neteasenews.FlowLayout>
+    </com.jackie.neteasenews.view.FlowLayout>
 </LinearLayout>
